@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import { Layout, Text } from '@ui-kitten/components';
+import {StyleSheet, Text} from 'react-native';
 import { getLongAndLatCoordinates, getLocationInformation } from '../logic/Location';
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const HomeScreen = ({ navigation }) => {
 
@@ -30,13 +30,19 @@ const HomeScreen = ({ navigation }) => {
 
 
     return (
-      <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text category='h1'>HOME</Text>
-        <Text>Coordinates: {JSON.stringify(coordinates, null, 2)}</Text>
-        <Text>LocationData: {JSON.stringify(locationInformation, null, 2)}</Text>
-      </Layout>
+      <SafeAreaView>
+        <Text style={{color:'black'}}>Coordinates: {JSON.stringify({longitude: coordinates?.longitude, latitude: coordinates?.latitude}, null, 2)}</Text>
+        <Text style={{color:'black'}}>LocationData: {JSON.stringify(locationInformation, null, 2)}</Text>
+      </SafeAreaView>
     );
-
 }
+
+const styles = new StyleSheet.create({
+  card: {
+    backgroundColor:'lightgray',
+    width: '90%',
+    color: 'black',
+  }
+});
 
 export default HomeScreen;

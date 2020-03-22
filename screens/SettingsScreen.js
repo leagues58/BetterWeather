@@ -1,12 +1,12 @@
 import React from 'react';
-import { Layout, Text } from '@ui-kitten/components';
+import {SafeAreaView, Text} from 'react-native';
 
 
 const SettingsScreen = () => {
   return (
-    <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <SafeAreaView>
       <Text category='h1'>SETTINGS</Text>
-    </Layout>
+    </SafeAreaView>
   );
 }
 
