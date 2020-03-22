@@ -2,34 +2,19 @@ import React from 'react';
 import { SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { ApplicationProvider, BottomNavigation, BottomNavigationTab, Layout, Text } from '@ui-kitten/components';
+import { ApplicationProvider, BottomNavigation, BottomNavigationTab } from '@ui-kitten/components';
 import { mapping, dark as darkTheme } from '@eva-design/eva';
+import HomeScreen from './screens/HomeScreen';
+import PlacesScreen from './screens/PlacesScreen';
+import SettingsScreen from './screens/SettingsScreen';
 
 const BottomTab = createBottomTabNavigator();
 
-const HomeScreen = () => {
-  return (
-    <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text category='h1'>HOME</Text>
-    </Layout>
-  );
-}
 
-const PlacesScreen = () => {
-  return (
-    <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text category='h1'>PLACES</Text>
-    </Layout>
-  );
-}
 
-const SettingsScreen = () => {
-  return (
-    <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text category='h1'>SETTINGS</Text>
-    </Layout>
-  );
-}
+
+
+
 
 const BottomTabBar = ({ navigation, state }) => {
 
