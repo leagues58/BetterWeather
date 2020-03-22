@@ -10,12 +10,6 @@ import SettingsScreen from './screens/SettingsScreen';
 
 const BottomTab = createBottomTabNavigator();
 
-
-
-
-
-
-
 const BottomTabBar = ({ navigation, state }) => {
 
   const onSelect = (index) => {
