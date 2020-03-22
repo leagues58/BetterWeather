@@ -5,7 +5,7 @@ const getLongAndLatCoordinates = async () => {
     enableHighAccuracy: true,
     timeout: 15000,
   });
-return location;
+return {...location, longitude:location.longitude.toFixed(4), latitude:location.latitude.toFixed(4)};
 }
 
 
