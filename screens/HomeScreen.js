@@ -1,7 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import { getLongAndLatCoordinates, getLocationInformation } from '../logic/Location';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import TextField from '../components/TextField';
+import Card from '../components/Card';
+
 
 const HomeScreen = ({ navigation }) => {
 
@@ -30,14 +33,26 @@ const HomeScreen = ({ navigation }) => {
 
 
     return (
-      <SafeAreaView>
-        <Text style={{color:'black'}}>Coordinates: {JSON.stringify({longitude: coordinates?.longitude, latitude: coordinates?.latitude}, null, 2)}</Text>
-        <Text style={{color:'black'}}>LocationData: {JSON.stringify(locationInformation, null, 2)}</Text>
+      <SafeAreaView style={styles.screen}>
+        <View style={styles.content}>
+          <Card headerText={`${locationInformation?.city}, ${locationInformation?.state}`}>
+            <TextField>Weather data goes here</TextField>
+          </Card>
+        </View>
       </SafeAreaView>
     );
 }
 
 const styles = new StyleSheet.create({
+  screen: {
+    flex: 1,
+  },
+  content: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+
+  },
   card: {
     backgroundColor:'lightgray',
     width: '90%',

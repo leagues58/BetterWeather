@@ -5,11 +5,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from './screens/HomeScreen';
 import PlacesScreen from './screens/PlacesScreen';
 import SettingsScreen from './screens/SettingsScreen';
+import BottomNavBar from './components/BottomNavBar';
 
 const BottomTab = createBottomTabNavigator();
 
 const TabNavigator = () => (
-<BottomTab.Navigator>
+<BottomTab.Navigator tabBar={props => <BottomNavBar {...props}/>}>
     <BottomTab.Screen name='Home' component={HomeScreen}/>
     <BottomTab.Screen name='Places' component={PlacesScreen}/>
     <BottomTab.Screen name='Settings' component={SettingsScreen}/>
