@@ -3,7 +3,7 @@ import {StyleSheet, Text} from 'react-native';
 
 const TextField = (props) => {
   return (
-  <Text style={styles.text}>{props.children}</Text>
+  <Text style={{...styles.text, ...props.style}}>{props.children}</Text>
   );
 }
 

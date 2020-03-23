@@ -58,9 +58,17 @@ const HomeScreen = ({ navigation }) => {
       <SafeAreaView style={styles.screen}>
         <View style={styles.content}>
           {!dataLoaded && <ActivityIndicator size={60}/>}
-          {dataLoaded && <Card headerText={`${locationInformation?.city}, ${locationInformation?.state}`}>
-            <TextField>{currentForecast?.detailedForecast}</TextField>
-          </Card>}
+          {dataLoaded && 
+            <View>
+              <View style={styles.temperatureContainer}>
+                <TextField style={styles.temperatureText}>
+                  {`${currentForecast?.temperature}\u00b0`}
+                </TextField>
+              </View>
+              <Card headerText={`${locationInformation?.city}, ${locationInformation?.state}`}>
+                <TextField style={styles.forecastText}>{currentForecast?.detailedForecast}</TextField>
+              </Card>
+            </View>}
         </View>
       </SafeAreaView>
     );
@@ -74,13 +82,17 @@ const styles = new StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-
   },
-  card: {
-    backgroundColor:'lightgray',
-    width: '90%',
-    color: 'black',
-  }
+  temperatureContainer: {
+    alignItems: 'center',
+    marginBottom: 30
+  },
+  temperatureText: {
+    fontSize: 100,
+  },
+  forecastText: {
+    fontSize: 20,
+  },
 });
 
 export default HomeScreen;
