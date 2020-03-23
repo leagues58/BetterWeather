@@ -18,7 +18,7 @@ const BottomNavBar = ({ state, descriptors, navigation }) => {
         };
 
         return (
-          <TouchableOpacity onPress={onPress} style={{...styles.barItem, ...(isFocused ? styles.selectedItem : null)}}>
+          <TouchableOpacity onPress={onPress} style={{...styles.barItem, ...(isFocused ? styles.selectedItem : null)}} key={index}>
             <Text style={isFocused ? styles.selectedItemText : {} }>
               {label}
             </Text>

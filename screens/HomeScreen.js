@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import { getLongAndLatCoordinates, getLocationInformation } from '../logic/Location';
+import {StyleSheet, View, ActivityIndicator} from 'react-native';
+import { getLongAndLatCoordinates, getLocationInformation, getCurrentWeatherByCoords } from '../logic/Location';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TextField from '../components/TextField';
 import Card from '../components/Card';
@@ -12,8 +12,10 @@ const HomeScreen = ({ navigation }) => {
     navigation.navigate('Details');
   };
 
+  const [dataLoaded, setDataLoaded] = useState(false);
   const [coordinates, setCoordinates] = useState();
   const [locationInformation, setLocationInformation] = useState();
+  const [currentForecast, setCurrentForecast] = useState();
 
   useEffect(() => {
     const getData = async () => {
@@ -26,18 +28,39 @@ const HomeScreen = ({ navigation }) => {
           setLocationInformation(locationInformationResponse);
         }
       }
-    }
+    };
 
     getData();
   }, []);
+
+  useEffect(() => {
+    const getData = async () => {
+      if (coordinates) {
+        const currentWeatherResponse = await getCurrentWeatherByCoords(coordinates.latitude, coordinates.longitude);
+        if (currentWeatherResponse) {
+          setCurrentForecast(currentWeatherResponse);
+        }
+        console.log('current weather: ' + JSON.stringify(currentWeatherResponse, null, 2))
+      }
+    };
+
+    getData();
+  }, [coordinates]);
+
+  useEffect(() => {
+    if (coordinates && locationInformation && currentForecast) {
+      setDataLoaded(true);
+    }
+  }, [coordinates, locationInformation, currentForecast]);
 
 
     return (
       <SafeAreaView style={styles.screen}>
         <View style={styles.content}>
-          <Card headerText={`${locationInformation?.city}, ${locationInformation?.state}`}>
-            <TextField>Weather data goes here</TextField>
-          </Card>
+          {!dataLoaded && <ActivityIndicator size={60}/>}
+          {dataLoaded && <Card headerText={`${locationInformation?.city}, ${locationInformation?.state}`}>
+            <TextField>{currentForecast?.detailedForecast}</TextField>
+          </Card>}
         </View>
       </SafeAreaView>
     );
