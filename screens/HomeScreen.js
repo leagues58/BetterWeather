@@ -7,7 +7,7 @@ import Card from '../components/Card';
 import getFormattedDate from '../utilities/Date';
 import LinearGradient from 'react-native-linear-gradient';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faMoon } from '@fortawesome/free-solid-svg-icons';
+import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 
 
 const HomeScreen = ({ navigation }) => {
@@ -73,7 +73,7 @@ const HomeScreen = ({ navigation }) => {
                 <TextField style={{fontSize:80}}>{`${currentForecast?.temperature}\u00b0`}</TextField>
                 <TextField>{`${currentForecast?.shortForecast}`}</TextField>
               </View>
-              <FontAwesomeIcon icon={ faMoon } color='white' size={80} />
+              {currentForecast?.isDayTime ? <FontAwesomeIcon icon={ faSun } color='yellow' size={80} /> : <FontAwesomeIcon icon={ faMoon } color='white' size={80} />}
             </View>
 
             <View style={{borderWidth: 1, borderColor: 'yellow'}}><TextField>Day panels</TextField></View>
@@ -124,7 +124,7 @@ const styles = new StyleSheet.create({
   tempAndIconArea: {
     //borderWidth: 1, 
     //borderColor: 'white', 
-    marginTop: '15%', 
+    marginTop: '25%', 
     paddingLeft:15, 
     flexDirection: 'row', 
     justifyContent: 'space-around', 
