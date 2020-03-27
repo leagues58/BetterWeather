@@ -60,7 +60,7 @@ const HomeScreen = ({ navigation }) => {
 
     return (
       <SafeAreaView style={styles.screen}>
-        <LinearGradient colors={['#243b55', '#141e30']} style={styles.linearGradient}>
+        <LinearGradient colors={currentForecast?.isDaytime ? ['#7dd3f0', '#0c9ecf'] : ['#243b55', '#141e30']} style={styles.linearGradient}>
           <View style={styles.content}>
 
             <View style={styles.dateLocationArea}>
@@ -73,7 +73,7 @@ const HomeScreen = ({ navigation }) => {
                 <TextField style={{fontSize:80}}>{`${currentForecast?.temperature}\u00b0`}</TextField>
                 <TextField>{`${currentForecast?.shortForecast}`}</TextField>
               </View>
-              {currentForecast?.isDayTime ? <FontAwesomeIcon icon={ faSun } color='yellow' size={80} /> : <FontAwesomeIcon icon={ faMoon } color='white' size={80} />}
+              {currentForecast?.isDaytime ? <FontAwesomeIcon icon={ faSun } color='white' size={80} /> : <FontAwesomeIcon icon={ faMoon } color='white' size={80} />}
             </View>
 
             <View style={{borderWidth: 1, borderColor: 'yellow'}}><TextField>Day panels</TextField></View>
