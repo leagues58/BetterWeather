@@ -10,7 +10,9 @@ const TextField = (props) => {
 
 const styles = StyleSheet.create({
   text: {
-    color: 'black',
+    color: 'white',
+    fontFamily: 'Quicksand-Regular',
+    fontSize: 18,
   }
 });
 
