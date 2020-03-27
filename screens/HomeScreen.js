@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, ActivityIndicator, Image} from 'react-native';
+import {StyleSheet, View, ActivityIndicator, Image, StatusBar} from 'react-native';
 import { getLongAndLatCoordinates, getLocationInformation, getCurrentWeatherByCoords } from '../logic/Location';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TextField from '../components/TextField';
@@ -57,10 +57,13 @@ const HomeScreen = ({ navigation }) => {
     }
   }, [coordinates, locationInformation, currentForecast]);
 
+  const isDaytime = currentForecast?.isDaytime;
+
 
     return (
       <SafeAreaView style={styles.screen}>
-        <LinearGradient colors={currentForecast?.isDaytime ? ['#7dd3f0', '#0c9ecf'] : ['#243b55', '#141e30']} style={styles.linearGradient}>
+        {isDaytime ? <StatusBar barStyle='dark-content' backgroundColor='#7dd3f0' /> : <StatusBar barStyle="light-content" backgroundColor='#243b55' />}
+        <LinearGradient colors={isDaytime ? ['#7dd3f0', '#0c9ecf'] : ['#243b55', '#141e30']} style={styles.linearGradient}>
           <View style={styles.content}>
 
             <View style={styles.dateLocationArea}>
@@ -73,7 +76,7 @@ const HomeScreen = ({ navigation }) => {
                 <TextField style={{fontSize:80}}>{`${currentForecast?.temperature}\u00b0`}</TextField>
                 <TextField>{`${currentForecast?.shortForecast}`}</TextField>
               </View>
-              {currentForecast?.isDaytime ? <FontAwesomeIcon icon={ faSun } color='white' size={80} /> : <FontAwesomeIcon icon={ faMoon } color='white' size={80} />}
+              {isDaytime ? <FontAwesomeIcon icon={ faSun } color='white' size={80} /> : <FontAwesomeIcon icon={ faMoon } color='white' size={80} />}
             </View>
 
             <View style={{borderWidth: 1, borderColor: 'yellow'}}><TextField>Day panels</TextField></View>
