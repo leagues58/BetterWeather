@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, ActivityIndicator, Image, StatusBar, ScrollView} from 'react-native';
 import { getLongAndLatCoordinates, getLocationInformation } from '../logic/Location';
-import { getCurrentWeatherByCoords } from '../logic/Forecast';
+import { getCondensedWeeklyForcastByCoords, getCurrentWeatherByCoords } from '../logic/Forecast';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TextField from '../components/TextField';
 import DayTile from '../components/DayTile';
@@ -21,23 +21,35 @@ const HomeScreen = ({ navigation }) => {
   const [coordinates, setCoordinates] = useState();
   const [locationInformation, setLocationInformation] = useState();
   const [currentForecast, setCurrentForecast] = useState();
+  const [futureWeather, setFutureWeather] = useState();
 
+  // get coordinates from gps
   useEffect(() => {
     const getData = async () => {
       const retrievedCoordinates = await getLongAndLatCoordinates();
       if (retrievedCoordinates) {
         setCoordinates(retrievedCoordinates);
-        const locationInformationResponse = await getLocationInformation(retrievedCoordinates.longitude, retrievedCoordinates.latitude);
-
-        if (locationInformationResponse) {
-          setLocationInformation(locationInformationResponse);
-        }
       }
     };
 
     getData();
   }, []);
 
+  // get location infomation based off gps coordinates
+  useEffect(() => {
+    const getData = async () => {
+      if (coordinates) {
+        const locationInformationResponse = await getLocationInformation(coordinates.longitude, coordinates.latitude);
+        if (locationInformationResponse) {
+          setLocationInformation(locationInformationResponse);
+        }
+      }
+    }
+    
+    getData();
+  }, [coordinates]);
+
+  // get weather from gps coordinates
   useEffect(() => {
     const getData = async () => {
       if (coordinates) {
@@ -45,7 +57,11 @@ const HomeScreen = ({ navigation }) => {
         if (currentWeatherResponse) {
           setCurrentForecast(currentWeatherResponse);
         }
-        console.log('current weather: ' + JSON.stringify(currentWeatherResponse, null, 2))
+
+        const futureWeatherData = await getCondensedWeeklyForcastByCoords(coordinates.latitude, coordinates.longitude);
+        if (futureWeatherData) {
+          setFutureWeather(futureWeatherData);
+        }
       }
     };
 
@@ -53,10 +69,10 @@ const HomeScreen = ({ navigation }) => {
   }, [coordinates]);
 
   useEffect(() => {
-    if (coordinates && locationInformation && currentForecast) {
+    if (coordinates && locationInformation && currentForecast && futureWeather) {
       setDataLoaded(true);
     }
-  }, [coordinates, locationInformation, currentForecast]);
+  }, [coordinates, locationInformation, currentForecast, futureWeather]);
 
   const isDaytime = currentForecast?.isDaytime;
 
@@ -83,13 +99,10 @@ const HomeScreen = ({ navigation }) => {
 
             <View style={{marginTop: '5%'}}>
               <ScrollView horizontal >
-                <DayTile isToday={true}/>
-                <DayTile isToday={false}/>
-                <DayTile isToday={false}/>
-                <DayTile isToday={false}/>
-                <DayTile isToday={false}/>
-                <DayTile isToday={false}/>   
-                <DayTile isToday={false}/>
+                {futureWeather.map(
+                  (period) => (<DayTile data={period} key={period.number}/>)
+                )}
+                
               </ScrollView>
             </View>
 
@@ -103,23 +116,6 @@ const HomeScreen = ({ navigation }) => {
     );
 }
 
-
-
-
-
-/*<View style={styles.content}>
-            {!dataLoaded && <ActivityIndicator size={60}/>}
-            {dataLoaded && 
-              <View>
-                <View style={styles.temperatureContainer}>
-                  <TextField style={styles.temperatureText}>
-                    {`${currentForecast?.temperature}\u00b0`}
-                  </TextField>
-                </View>
-                <TextField style={styles.forecastText}>{`${locationInformation?.city}, ${locationInformation?.state}`}</TextField>
-                  <TextField style={styles.forecastText}>{currentForecast?.detailedForecast}</TextField>
-              </View>}
-          </View>*/
 
 const styles = new StyleSheet.create({
   screen: {

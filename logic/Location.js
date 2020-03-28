@@ -3,6 +3,7 @@ import { OPENCAGEDATA_API_KEY } from 'react-native-dotenv';
 import getLocationInfoService from '../services/GetLocationInfoService';
 
 const getLongAndLatCoordinates = async () => {
+  console.log('getting gps stuff')
   const location = await GetLocation.getCurrentPosition({
     enableHighAccuracy: true,
     timeout: 15000,
