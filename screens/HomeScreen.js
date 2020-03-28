@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, ActivityIndicator, Image, StatusBar} from 'react-native';
+import {StyleSheet, View, ActivityIndicator, Image, StatusBar, ScrollView} from 'react-native';
 import { getLongAndLatCoordinates, getLocationInformation, getCurrentWeatherByCoords } from '../logic/Location';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TextField from '../components/TextField';
-import Card from '../components/Card';
+import DayTile from '../components/DayTile';
 import getFormattedDate from '../utilities/Date';
 import LinearGradient from 'react-native-linear-gradient';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -64,7 +64,8 @@ const HomeScreen = ({ navigation }) => {
       <SafeAreaView style={styles.screen}>
         {isDaytime ? <StatusBar barStyle='dark-content' backgroundColor='#7dd3f0' /> : <StatusBar barStyle="light-content" backgroundColor='#243b55' />}
         <LinearGradient colors={isDaytime ? ['#7dd3f0', '#0c9ecf'] : ['#243b55', '#141e30']} style={styles.linearGradient}>
-          <View style={styles.content}>
+        {!dataLoaded && <ActivityIndicator size={60}/>}
+          {dataLoaded && <View style={styles.content}>
 
             <View style={styles.dateLocationArea}>
               <TextField>{getFormattedDate()}</TextField>
@@ -79,13 +80,23 @@ const HomeScreen = ({ navigation }) => {
               {isDaytime ? <FontAwesomeIcon icon={ faSun } color='white' size={80} /> : <FontAwesomeIcon icon={ faMoon } color='white' size={80} />}
             </View>
 
-            <View style={{borderWidth: 1, borderColor: 'yellow'}}><TextField>Day panels</TextField></View>
+            <View style={{marginTop: '5%'}}>
+              <ScrollView horizontal >
+                <DayTile isToday={true}/>
+                <DayTile isToday={false}/>
+                <DayTile isToday={false}/>
+                <DayTile isToday={false}/>
+                <DayTile isToday={false}/>
+                <DayTile isToday={false}/>   
+                <DayTile isToday={false}/>
+              </ScrollView>
+            </View>
 
-            <View style={{borderWidth: 1, borderColor: 'orange'}}><TextField>Temp graph</TextField></View>
+            <View style={{borderWidth: 1, borderColor: 'orange',  marginTop: '5%'}}><TextField>Temp graph</TextField></View>
 
-            <View style={{borderWidth: 1, borderColor: 'white'}}><TextField>Assorted data bits</TextField></View>
+            <View style={{borderWidth: 1, borderColor: 'white',  marginTop: '5%'}}><TextField>Assorted data bits</TextField></View>
             
-          </View>
+          </View>}
         </LinearGradient>
       </SafeAreaView>
     );
@@ -114,21 +125,21 @@ const styles = new StyleSheet.create({
     flex: 1,
   },
   content: {
-    flex: 1, 
+    
     //borderWidth: .5, 
     //borderColor: 'red', 
-    paddingTop: 10
+    paddingTop: '2%'
   },
   dateLocationArea: {
     //borderWidth: 1, 
     //borderColor: 'green', 
-    paddingLeft: 15
+    paddingLeft: '5%'
   },
   tempAndIconArea: {
     //borderWidth: 1, 
     //borderColor: 'white', 
     marginTop: '25%', 
-    paddingLeft:15, 
+    paddingLeft:'5%', 
     flexDirection: 'row', 
     justifyContent: 'space-around', 
     alignItems: 'center'
