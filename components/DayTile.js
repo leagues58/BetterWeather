@@ -24,7 +24,7 @@ const DayTile = ({data}) => {
 const styles = (isDaytime) => StyleSheet.create({
   tile: {
     padding: 15,
-    margin: 10,
+    margin: 8,
     borderRadius: 15,
     backgroundColor: isDaytime ? '#263651' : '#18253a',
     shadowColor: '#000',
@@ -32,6 +32,7 @@ const styles = (isDaytime) => StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
+    width: '15%',
 
   }
 });

@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import TextField from './TextField';
 
 const BottomNavBar = ({ state, descriptors, navigation }) => {
 
@@ -19,9 +20,9 @@ const BottomNavBar = ({ state, descriptors, navigation }) => {
 
         return (
           <TouchableOpacity onPress={onPress} style={{...styles.barItem, ...(isFocused ? styles.selectedItem : null)}} key={index}>
-            <Text style={isFocused ? styles.selectedItemText : {} }>
+            <TextField style={isFocused ? styles.selectedItemText : {color: 'white'}}>
               {label}
-            </Text>
+            </TextField>
           </TouchableOpacity>
         );
       })}
@@ -34,6 +35,7 @@ const styles = StyleSheet.create({
   barContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+    backgroundColor: '#141e30',
   }, 
   barItem: {
     margin: 5,
