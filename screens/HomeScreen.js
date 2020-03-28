@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, ActivityIndicator, Image, StatusBar, ScrollView} from 'react-native';
-import { getLongAndLatCoordinates, getLocationInformation, getCurrentWeatherByCoords } from '../logic/Location';
+import { getLongAndLatCoordinates, getLocationInformation } from '../logic/Location';
+import { getCurrentWeatherByCoords } from '../logic/Forecast';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TextField from '../components/TextField';
 import DayTile from '../components/DayTile';
@@ -138,7 +139,7 @@ const styles = new StyleSheet.create({
   tempAndIconArea: {
     //borderWidth: 1, 
     //borderColor: 'white', 
-    marginTop: '25%', 
+    marginTop: '15%', 
     paddingLeft:'5%', 
     flexDirection: 'row', 
     justifyContent: 'space-around', 
